@@ -24,7 +24,7 @@ Execution:
 #Meta dados -python community conversion
 # É uma boa prática
 
-__version__ = "0.0.1"
+__version__ = "0.1.2"
 __autor__ = "Edmar Almeida"
 __license__ = "Unlicense"
 
@@ -41,11 +41,12 @@ current_language = os.getenv("LANG", "en_US")[:5]
 # O segundo argumento da função getenv() é o valor padrão
 # caso a variável LANG esteja vazia - evita erros.
 
-msg = "Hello, World!"
+msg = {
+    "en_US": "Hello, World!",
+    "pt_BR": "Olá, Mundo!",
+    "it_IT": "Ciao, Mundo!",
+    "es_SP": "Hola, Mundo!",
+    "fr_FR": "Bonjour Monde"
+    }
 
-if current_language == "pt_BR":
-    msg = "Olá, Mundo!"
-elif current_language == "it_IT":
-    msg = "Ciao, Modo!"
-
-print(msg)
+print(msg[current_language])
