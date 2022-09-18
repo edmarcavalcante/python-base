@@ -23,7 +23,3 @@ if len(names) >= 3:
 else:
     print("[Erro] Missing name  in the list")
     sys.exit(1)
-
-
-names = open("names.txt").readlines()
-print(names)
