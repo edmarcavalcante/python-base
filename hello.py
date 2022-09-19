@@ -43,7 +43,19 @@ arguments = {
 
 for arg in sys.argv[1:]:
     # TODO: tratar ValueError
-    key, value = arg.split("=")
+    # Tratando erros com o método - EAFP
+    try:
+        key, value = arg.split("=")
+    except ValueError as e:
+        # TODO: Logging - o log pode ser importante no reporte de erros.
+        print(f"{str(e)}") # É important passar a mensagem do erro para a
+        # equipe de suporte analisar.
+        print("You need to use `=`")
+        print(f"You passed {arg}")
+        print(f"Try with --key=value")
+        sys.exit(1)
+    
+    
     key = key.lstrip("-").strip()
     value = value.strip()
     if key not in arguments:
@@ -74,4 +86,32 @@ msg = {
     "fr_FR": "Bonjour Monde"
     }
 
-print((msg[current_language]) * int(arguments["count"]))
+# >>>>> 3 MÉTODOS DE TRATAR ERROS <<<<<<
+
+# MÉTODO 1 - Tratando erro no método LBYL
+"""
+if current_language in msg:
+    message = msg[current_language]
+else:
+    print(f"Language is invalid.Please, choose from: {list(msg.keys())}")
+    sys.exit(1)
+"""
+# MÉTODO 2 - Para estruturas de dados DICT
+""" 
+Outra opção de tratar KeyError em Dicionários é usar o método get()
+Dict.get(param1, param2) tenta acessar a key passada como primeiro
+parámetro, caso não encontre, usar o valor default passado no segundo
+parámetro. 
+Seria assim >>> message = msg.get(current_language, msg["pt_BR"])
+"""
+
+#MÉTODO 3 - Tratando erro no método EAFP - o código fica mais performático,
+# um vez que não precisa fazer a  validação do bloco if.
+try:
+    message = msg[current_language]
+except KeyError as e:
+    print(f"[Error] {str(e)}")
+    print(f"Language is invalid.Please, choose from: {list(msg.keys())}")
+    sys.exit(1)
+
+print(msg * int(arguments["count"]))
