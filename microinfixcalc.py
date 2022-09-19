@@ -48,11 +48,13 @@ for param in sys.argv[1:]:
 
 if len(list_param) != 3:
     print(f"Three arguments are required!")
-    sys.exit()
+    print(f"The first parameter must be {operation} and the other two numbers")
+    sys.exit(1)
 
 if list_param[0].lower() not in operation:
     print(f"Invalid Option! {list_param[0]}")
-    sys.exit()
+    print(f"You first parameter must be {operation}")
+    sys.exit(1)
 
 v1 = float(list_param[1]) 
 v2 = float(list_param[2])
@@ -77,7 +79,15 @@ filepath = os.path.join(path, "infixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv("USER", "anonymous")
 
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp} - {user} - {op}, {v1}, {v2} = {result}\n")
-
 print(result)
+
+# Tratando erro - PermissionError - caso o usuário não tenha acesso 
+# a pasta onde o arquivo de log será salvo.
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp} - {user} - {op}, {v1}, {v2} = {result}\n")
+except PermissionError as e:
+    # TODO: logging
+    print(str(e))
+    sys.exit(1)
+
