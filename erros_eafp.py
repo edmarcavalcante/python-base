@@ -15,7 +15,9 @@ except FileNotFoundError:
     # TODO: Usar um retry
 else:
     print("Sucesso!") # É ambíguo o uso de else nesse caso,
-    # mas pode ser usado. 
+    # mas pode ser usado.
+finally:
+    print("Executa isso sempre!")
 
 try:
     print(names[4])
