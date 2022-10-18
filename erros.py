@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-from re import I
 import sys
 
 # LBYL - LOOK BEFORE YOU LEAP
@@ -23,3 +22,5 @@ if len(names) >= 3:
 else:
     print("[Erro] Missing name  in the list")
     sys.exit(1)
+
+# Testando push do windows
